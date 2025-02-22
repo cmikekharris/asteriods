@@ -6,6 +6,8 @@ import random
 from constants import *
 from player import Player
 from star import Star
+from asteroidfield import AsteroidField
+from asteroid import Asteroid
 
 def main():
     # Initialize the game
@@ -18,10 +20,17 @@ def main():
     updatable = pygame.sprite.Group()
     # All the objects that can be drawn
     drawable = pygame.sprite.Group()
+    # All the asteriods
+    asteroids = pygame.sprite.Group()
+
     # Set the containers for the player
     Player.containers = (updatable, drawable)
     # Set the containers for the stars
     Star.containers = (updatable, drawable)
+    # Set the containers for the asteriods
+    Asteroid.containers = (asteroids, updatable, drawable)
+    # Set the containers for the asteroid field
+    AsteroidField.containers = (updatable)
 
     # Create a field of stars
     for _ in range(50):  # 50 stars
@@ -34,6 +43,9 @@ def main():
 
     # Create the player's ship
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+    # Create the asteroid field
+    asteroid_field = AsteroidField()
 
     dt = 0
 
@@ -59,6 +71,11 @@ def main():
 
         # Update the display
         pygame.display.flip()
+
+        for asteroid in asteroids:
+            if asteroid.collides_with(player):
+                print("Game over!")
+                return
 
         dt = clock.tick(60) / 1000
 
