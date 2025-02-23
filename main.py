@@ -8,6 +8,7 @@ from player import Player
 from star import Star
 from asteroidfield import AsteroidField
 from asteroid import Asteroid
+from shot import Shot
 
 def main():
     # Initialize the game
@@ -22,6 +23,8 @@ def main():
     drawable = pygame.sprite.Group()
     # All the asteriods
     asteroids = pygame.sprite.Group()
+    # All the shots
+    shots = pygame.sprite.Group()
 
     # Set the containers for the player
     Player.containers = (updatable, drawable)
@@ -31,6 +34,8 @@ def main():
     Asteroid.containers = (asteroids, updatable, drawable)
     # Set the containers for the asteroid field
     AsteroidField.containers = (updatable)
+    # Set the containers for the shots
+    Shot.containers = (shots, updatable, drawable)
 
     # Create a field of stars
     for _ in range(50):  # 50 stars
